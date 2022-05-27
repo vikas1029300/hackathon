@@ -2,6 +2,7 @@ from tkinter import *
 import numpy as np
 import pandas as pd
 
+
 #List of the symptoms is listed here in list l1.
 
 l1 = ['back_pain', 'constipation', 'abdominal_pain', 'diarrhoea', 'mild_fever', 'yellow_urine',
