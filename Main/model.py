@@ -110,6 +110,51 @@ def NaiveBayes():
     else:
         t3.delete("1.0", END)
         t3.insert(END, "Not Found")
+        
+        
+def KNN():
+    from sklearn.neighbors import KNeighborsClassifier
+    knn = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p=2)
+    knn = knn.fit(X, np.ravel(y))
+
+    from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+    y_pred = knn.predict(X_test)
+    print("kNearest Neighbour")
+    print("Accuracy")
+    print(accuracy_score(y_test, y_pred))
+    print(accuracy_score(y_test, y_pred, normalize=False))
+    
+    
+        
+
+    psymptoms = [Symptom1.get(), Symptom2.get(), Symptom3.get(),
+                     Symptom4.get(), Symptom5.get()]
+
+    for k in range(0, len(l1)):
+        for z in psymptoms:
+            if(z == l1[k]):
+                l2[k] = 1
+    
+    inputtest = [l2]
+    predict = knn.predict(inputtest)
+    predicted = predict[0]
+
+    h = 'no'
+    for a in range(0, len(disease)):
+        if(predicted == a):
+            h = 'yes'
+            break
+
+    if (h == 'yes'):
+        t4.delete("1.0", END)
+        t4.insert(END, disease[a])
+    else:
+        t4.delete("1.0", END)
+        t4.insert(END, "Not Found")
+         
+        
+
+        
 
 
 # GUI stuff..............................................................................
@@ -180,6 +225,10 @@ ranfLb = Label(root, text="NaiveBayes", fg="White", bg="green")
 ranfLb.config(font=("Times", 15, "bold italic"))
 ranfLb.grid(row=19, column=0, pady=10, sticky=W)
 
+ranfLb = Label(root, text="KNN", fg="Blue", bg="yellow")
+ranfLb.config(font=("Times", 15, "bold italic"))
+ranfLb.grid(row=21, column=0, pady=10, sticky=W)
+
 OPTIONS = sorted(l1)
 
 # NameEn = Entry(root, textvariable=Name)
@@ -216,6 +265,11 @@ lr = Button(root, text="Prediction 3",
 lr.config(font=("Times", 15, "bold italic"))
 lr.grid(row=10, column=3, padx=10)
 
+lr = Button(root, text="Prediction 4",
+            command=KNN, bg="Blue", fg="white")
+lr.config(font=("Times", 15, "bold italic"))
+lr.grid(row=11, column=3, padx=10)
+
 
 t1 = Text(root, height=1, width=40, bg="Light green", fg="red")
 t1.config(font=("Times", 15, "bold italic"))
@@ -228,5 +282,9 @@ t2.grid(row=17, column=1, padx=10)
 t3 = Text(root, height=1, width=40, bg="red", fg="white")
 t3.config(font=("Times", 15, "bold italic"))
 t3.grid(row=19, column=1, padx=10)
+
+t4 = Text(root, height=1, width=40, bg="red", fg="white")
+t4.config(font=("Times", 15, "bold italic"))
+t4.grid(row=21, column=1, padx=10)
 
 root.mainloop()
